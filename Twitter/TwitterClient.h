@@ -7,7 +7,7 @@
 
 #import "SocialClient.h"
 
-@interface TwitterClient : SocialClient
+@interface TwitterClient : SocialClient <UIWebViewDelegate>
 
 @property (strong, nonatomic)	TwitterClient	*twitterClient;
 @property (strong, nonatomic)	TwitterClient	*twitterAccountClient;
