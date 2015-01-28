@@ -15,10 +15,9 @@
 	BOOL	publishAsked;
 }
 
-@property (strong, nonatomic)	FacebookClient	*facebookClient;
+@property (strong, nonatomic)	FacebookClient	*client;
 @property (strong, nonatomic)	NSDictionary 	*loginParams;
 @property (strong, nonatomic)	NSString		*appId;
-@property (nonatomic) 			ACAccountStore 	*accountStore;
 @property (strong, nonatomic)	ACAccount		*facebookAccount;
 @property (strong, nonatomic)	NSString		*facebookAppId;
 @property (strong, nonatomic)	ACAccount		*account;

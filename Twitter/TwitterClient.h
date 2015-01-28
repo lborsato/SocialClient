@@ -9,7 +9,7 @@
 
 @interface TwitterClient : SocialClient <UIWebViewDelegate>
 
-@property (strong, nonatomic)	TwitterClient	*twitterClient;
+@property (strong, nonatomic)	TwitterClient	*client;
 @property (strong, nonatomic)	TwitterClient	*twitterAccountClient;
 @property (strong, nonatomic)	TwitterClient	*twitterOAuthClient;
 @property (strong, nonatomic)	NSDictionary 	*loginParams;

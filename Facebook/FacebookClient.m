@@ -55,19 +55,20 @@
 - (void) loginWithParams:(NSDictionary *)params
 {
 	self.loginParams = params;
-	self.facebookClient = [FacebookAccountClient facebookClient];
-	self.facebookClient.delegate    = self.delegate;
-	self.facebookClient.loginParams = self.loginParams;
-	[self.facebookClient login];
+	self.client = [FacebookAccountClient facebookClient];
+	self.client.delegate    = self.delegate;
+	self.client.loginParams = self.loginParams;
+	self.client.facebookAppId = params[@"FacebookAppId"];
+	[self.client login];
 }
 
 
 - (void) loginWithOAuth
 {
-	self.facebookClient = [FacebookOAuthClient facebookClient];
-	self.facebookClient.delegate    = self.delegate;
-	self.facebookClient.loginParams = self.loginParams;
-	[self.facebookClient login];
+	self.client = [FacebookOAuthClient facebookClient];
+	self.client.delegate    = self.delegate;
+	self.client.loginParams = self.loginParams;
+	[self.client login];
 }
 
 
@@ -96,7 +97,7 @@
 
 - (void) updateStatus:(NSString *)status
 {
-	[self.facebookClient updateStatus:status];
+	[self.client updateStatus:status];
 }
 
 

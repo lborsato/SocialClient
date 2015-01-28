@@ -63,21 +63,21 @@
 - (void) loginWithParams:(NSDictionary *)params
 {
 	self.loginParams = params;
-	self.twitterClient = [TwitterAccountClient twitterClient];
-	self.twitterClient.delegate    = self.delegate;
-	self.twitterClient.loginParams = self.loginParams;
-	self.twitterClient.parentView  = self.parentView;
-	[self.twitterClient login];
+	self.client = [TwitterAccountClient twitterClient];
+	self.client.delegate    = self.delegate;
+	self.client.loginParams = self.loginParams;
+	self.client.parentView  = self.parentView;
+	[self.client login];
 }
 
 
 - (void) loginWithOAuth
 {
-	self.twitterClient = [TwitterOAuthClient twitterClient];
-	self.twitterClient.delegate    = self.delegate;
-	self.twitterClient.loginParams = self.loginParams;
-	self.twitterClient.parentView  = self.parentView;
-	[self.twitterClient login];
+	self.client = [TwitterOAuthClient twitterClient];
+	self.client.delegate    = self.delegate;
+	self.client.loginParams = self.loginParams;
+	self.client.parentView  = self.parentView;
+	[self.client login];
 }
 
 
@@ -99,14 +99,14 @@
  */
 - (BOOL)canUpdateStatus
 {
-	return [self.twitterClient canUpdateStatus];
+	return [self.client canUpdateStatus];
 }
 
 
 
 - (void) updateStatus:(NSString *)status
 {
-	[self.twitterClient updateStatus:status];
+	[self.client updateStatus:status];
 }
 
 

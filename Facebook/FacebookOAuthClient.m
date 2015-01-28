@@ -10,7 +10,12 @@
 
 @implementation FacebookOAuthClient
 
-- (void)loginWithSdk
++ (id)facebookClient
+{
+	return [[self alloc] init];
+}
+
+- (void) login
 {
 	if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
 		[self openSessionWithUI:NO];
@@ -146,9 +151,6 @@
  */
 - (BOOL)canUpdateStatus
 {
-	if ( self.account )
-		return YES;
-	
 	if ( ![self isSessionStateEffectivelyLoggedIn:FBSession.activeSession.state] )
 		return NO;
 	
@@ -166,7 +168,6 @@
  */
 - (void)updateStatus:(NSString *)status
 {
-	/*[FBRequestConnection startForPostOpenGraphObjectWithType:<#(NSString *)#> title:<#(NSString *)#> image:<#(id)#> url:<#(id)#> description:<#(NSString *)#> objectProperties:<#(NSDictionary *)#> completionHandler:<#^(FBRequestConnection *connection, id result, NSError *error)handler#>]*/
 	[FBRequestConnection startForPostStatusUpdate:status
 								completionHandler:^(FBRequestConnection *connection, id result, NSError *error)
 		{

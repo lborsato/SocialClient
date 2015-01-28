@@ -10,18 +10,27 @@
 
 @implementation FacebookAccountClient
 
-- (void)findAccountInAccountStore
+ACAccountStore	*accountStore;
+NSArray			*accounts;
+
++ (id)facebookClient
 {
-	self.accountStore = [[ACAccountStore alloc] init];
+	return [[self alloc] init];
+}
+
+
+- (void) login
+{
+	accountStore = [[ACAccountStore alloc] init];
 	
-	ACAccountType *FBaccountType= [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
+	ACAccountType *FBaccountType= [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierFacebook];
 	
 	NSDictionary *options = @{ACFacebookAppIdKey: 		self.facebookAppId,
 							  ACFacebookPermissionsKey: FacebookWritePermissions,
 							  ACFacebookAudienceKey:	ACFacebookAudienceFriends};
 	
 	
-	[self.accountStore requestAccessToAccountsWithType:FBaccountType
+	[accountStore requestAccessToAccountsWithType:FBaccountType
 											   options:options
 											completion:^(BOOL granted, NSError *error) {
 												dispatch_async(dispatch_get_main_queue(), ^{
@@ -31,12 +40,12 @@
 														self.accountIdentifier = [defaults objectForKey:@"FacebookAccountIdentifier"];
 														if ( self.accountIdentifier )
 														{
-															self.account = [self.accountStore accountWithIdentifier:self.accountIdentifier];
+															self.account = [accountStore accountWithIdentifier:self.accountIdentifier];
 															[self loginCompleteWithStatus:SCLoginSuccessful data:nil error:error];
 														}
 														else
 														{
-															NSArray *accounts = [self.accountStore accountsWithAccountType:FBaccountType];
+															NSArray *accounts = [accountStore accountsWithAccountType:FBaccountType];
 															if ( [accounts count] > 0 )
 															{
 																//it will always be the last object with single sign on
@@ -77,6 +86,20 @@
 
 
 /**
+ *	Is the user able to post a status update
+ *
+ *	@return	BOOL	YES if can post, NO if not
+ */
+- (BOOL)canUpdateStatus
+{
+	if ( self.account )
+		return YES;
+	
+	return NO;
+}
+
+
+/**
  *	Post a status update via the account
  *
  *	@param	NSString*	status		status to post
@@ -100,10 +123,6 @@
 	// Perform request
 	[request performRequestWithHandler:^(NSData *respData, NSHTTPURLResponse *urlResp, NSError *error)
 	 {
-		 NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:respData
-																			options:kNilOptions
-																			  error:&error];
-		 
 		 // Check for errors in the responseDictionary
 		 if ( !error )
 			 [self updateStatusCompleteWithStatus:SCUpdateSuccessful data:respData error:error];
