@@ -68,6 +68,18 @@ UIAlertView	*alertSelect;
 }
 
 
+/**
+ *	Is the user logged in
+ *
+ *	@return	BOOL	YES if logged in, NO if not
+ */
+- (BOOL) loggedIn
+{
+	if ( self.consumerKey && self.consumerSecret && self.accessToken && self.accessTokenSecret )
+		return YES;
+	return NO;
+}
+
 #pragma mark - OAuth authentication methods
 
 - (void) requestToken
