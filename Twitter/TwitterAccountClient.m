@@ -64,7 +64,7 @@ UIAlertView		*alertSelect;
 					 [self saveAccountIdentifier:self.account.identifier];
 					 
 				 }
-				 if ( [accounts count] > 1 )
+				 else if ( [accounts count] > 1 )
 				 {
 					 [self alertSelectAccount:accounts];
 				 }

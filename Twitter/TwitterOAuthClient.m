@@ -146,7 +146,7 @@ UIWebView 			*webview;
 	else if ( errorRange.location != NSNotFound )
 	{
 		[webView removeFromSuperview];
-		[self loginCompleteWithStatus:SCLoginCancelled data:nil error:nil];
+		[self loginCompleteWithStatus:SCLoginFailedUnauthorized data:nil error:nil];
 		return NO;
 	}
  
